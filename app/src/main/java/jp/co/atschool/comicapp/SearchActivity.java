@@ -14,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
                 call.enqueue(new Callback<ListItem>() {
                     @Override
                     public void onResponse(Call<ListItem> call, Response<ListItem> response) {
-
+                        Timber.d(String.valueOf(response.body().getListItems().get(0)));
                     }
 
                     @Override
