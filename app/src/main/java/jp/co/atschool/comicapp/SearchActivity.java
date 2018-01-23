@@ -32,10 +32,10 @@ public class SearchActivity extends AppCompatActivity {
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(final String s) {
                 String encodedStr = getURLEncStr(s);
 
-                TextView textView;
+                final TextView textView;
                 textView = findViewById(R.id.textView);
 
                 Retrofit retrofit = new Retrofit.Builder()
@@ -43,17 +43,51 @@ public class SearchActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 API_Interface api = retrofit.create(API_Interface.class);
-              //  Call<ListItem> call = api.getItem(encodedStr);
-                Call<ListItem> call = api.getItem(encodedStr);
+            /*    Call<ListItem> call = api.getItem(encodedStr);
 
                 call.enqueue(new Callback<ListItem>() {
                     @Override
                     public void onResponse(Call<ListItem> call, Response<ListItem> response) {
-                        Timber.d(String.valueOf(response.body().getListItems().get(0)));
+                        ListItem list = response.body();
+                        List<Item> items = list.getListItems();
+                        Item item = items.get(0);
+                        Timber.d(call.toString());
+                        Timber.d(response.toString());
+                        Timber.d(list.toString());
+                        Timber.d(items.toString());
+                        for (Item item1 : items) {
+                            Timber.d("hogehoge: " + item1.title);
+                        }
+                        Timber.d(item.toString());
+                        Timber.d("faaaaaaaaa");
+                        textView.setText(item.getTitle());
                     }
 
                     @Override
                     public void onFailure(Call<ListItem> call, Throwable t) {
+                        Timber.d("foooooooooo");
+                    }
+
+                }); */
+
+                Call<Test> call = api.getCount(encodedStr);
+
+                call.enqueue(new Callback<Test>() {
+                    @Override
+                    public void onResponse(Call<Test> call, Response<Test> response) {
+
+                        Integer count = response.body().getCount();
+                        Integer count2 = response.body().pageCount;
+
+                        Timber.d("hoge: " + count);
+                        Timber.d("hogehoge: " + count2);
+
+                      //  textView.setText(title);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Test> call, Throwable t) {
+                        Timber.d("foooooooooo");
                     }
 
                 });

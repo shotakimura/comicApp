@@ -12,4 +12,8 @@ public class ListItem {
     public List<Item> getListItems() {
         return Items;
     }
+
+    public void setListItems(List<Item> Items) {
+        this.Items = Items;
+    }
 }
