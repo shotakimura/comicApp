@@ -9,8 +9,8 @@ import retrofit2.http.Query;
  */
 
 public interface API_Interface {
-   // @GET("services/api/BooksBook/Search/20170404?format=json&size=9&booksGenreId=001001&applicationId=1067988941835934400")
-    //Call<ListItem> getItem(@Query("title") String title);
+    @GET("services/api/BooksBook/Search/20170404?format=json&size=9&booksGenreId=001001&applicationId=1067988941835934400")
+    Call<ListItem> getItem(@Query("title") String title);
 
     @GET("services/api/BooksBook/Search/20170404?format=json&size=9&booksGenreId=001001&applicationId=1067988941835934400")
     Call<Test> getCount(@Query("title") String title);

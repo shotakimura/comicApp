@@ -1,13 +1,14 @@
 package jp.co.atschool.comicapp;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,15 +36,12 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(final String s) {
                 String encodedStr = getURLEncStr(s);
 
-                final TextView textView;
-                textView = findViewById(R.id.textView);
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://app.rakuten.co.jp/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 API_Interface api = retrofit.create(API_Interface.class);
-            /*    Call<ListItem> call = api.getItem(encodedStr);
+                Call<ListItem> call = api.getItem(encodedStr);
 
                 call.enqueue(new Callback<ListItem>() {
                     @Override
@@ -55,12 +53,9 @@ public class SearchActivity extends AppCompatActivity {
                         Timber.d(response.toString());
                         Timber.d(list.toString());
                         Timber.d(items.toString());
-                        for (Item item1 : items) {
-                            Timber.d("hogehoge: " + item1.title);
-                        }
+                        makeResultView(s);
                         Timber.d(item.toString());
                         Timber.d("faaaaaaaaa");
-                        textView.setText(item.getTitle());
                     }
 
                     @Override
@@ -68,9 +63,9 @@ public class SearchActivity extends AppCompatActivity {
                         Timber.d("foooooooooo");
                     }
 
-                }); */
+                });
 
-                Call<Test> call = api.getCount(encodedStr);
+         /*       Call<Test> call = api.getCount(encodedStr);
 
                 call.enqueue(new Callback<Test>() {
                     @Override
@@ -82,7 +77,7 @@ public class SearchActivity extends AppCompatActivity {
                         Timber.d("hoge: " + count);
                         Timber.d("hogehoge: " + count2);
 
-                      //  textView.setText(title);
+                        makeResultView(s);
                     }
 
                     @Override
@@ -90,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
                         Timber.d("foooooooooo");
                     }
 
-                });
+                }); */
 
                 return false;
             }
@@ -112,6 +107,21 @@ public class SearchActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void makeResultView(String s) {
+        SearchFragment fragment = new SearchFragment();
+
+        Bundle args = new Bundle();
+        //値を渡す
+        args.putString("keyword", s);
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.frame, fragment);
+        // 最後にcommitを使用することで変更を反映します
+        transaction.commit();
+
     }
 
 }
