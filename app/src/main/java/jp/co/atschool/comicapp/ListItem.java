@@ -9,11 +9,21 @@ import java.util.List;
 public class ListItem {
     public List<Item> Items;
 
+    public Integer count;
+
     public List<Item> getListItems() {
         return Items;
     }
 
     public void setListItems(List<Item> Items) {
         this.Items = Items;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

@@ -54,8 +54,9 @@ public class SearchActivity extends AppCompatActivity {
                         Timber.d(list.toString());
                         Timber.d(items.toString());
                         makeResultView(s);
-                        Timber.d(item.toString());
                         Timber.d("faaaaaaaaa");
+                        Integer count = list.getCount();
+                        Timber.d("count: " + count);
                     }
 
                     @Override
@@ -64,28 +65,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                 });
-
-         /*       Call<Test> call = api.getCount(encodedStr);
-
-                call.enqueue(new Callback<Test>() {
-                    @Override
-                    public void onResponse(Call<Test> call, Response<Test> response) {
-
-                        Integer count = response.body().getCount();
-                        Integer count2 = response.body().pageCount;
-
-                        Timber.d("hoge: " + count);
-                        Timber.d("hogehoge: " + count2);
-
-                        makeResultView(s);
-                    }
-
-                    @Override
-                    public void onFailure(Call<Test> call, Throwable t) {
-                        Timber.d("foooooooooo");
-                    }
-
-                }); */
 
                 return false;
             }
