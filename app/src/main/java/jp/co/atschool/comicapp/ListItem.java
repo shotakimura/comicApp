@@ -7,15 +7,15 @@ import java.util.List;
  */
 
 public class ListItem {
-    public List<Item> Items;
+    public List<Items> Items;
 
     public Integer count;
 
-    public List<Item> getListItems() {
+    public List<Items> getListItems() {
         return Items;
     }
 
-    public void setListItems(List<Item> Items) {
+    public void setListItems(List<Items> Items) {
         this.Items = Items;
     }
 

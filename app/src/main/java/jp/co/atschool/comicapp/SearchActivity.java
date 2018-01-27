@@ -47,12 +47,9 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ListItem> call, Response<ListItem> response) {
                         ListItem list = response.body();
-                        List<Item> items = list.getListItems();
-                        Item item = items.get(0);
-                        Timber.d(call.toString());
-                        Timber.d(response.toString());
-                        Timber.d(list.toString());
-                        Timber.d(items.toString());
+                        List<Items> items = list.getListItems();
+                        Item item = items.get(0).getItem();
+                        Timber.d("title: " + item.getTitle());
                         makeResultView(s);
                         Timber.d("faaaaaaaaa");
                         Integer count = list.getCount();
