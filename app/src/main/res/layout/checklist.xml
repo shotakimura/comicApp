@@ -6,5 +6,8 @@
     <CheckBox android:id="@+id/checkTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:text="CheckTitle" />
 </LinearLayout>
