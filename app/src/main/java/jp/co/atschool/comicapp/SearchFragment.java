@@ -21,13 +21,15 @@ public class SearchFragment extends Fragment {
 
     private TextView mTextView;
     private String searchWord;
+    ListItem listItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            searchWord = args.getString("keyword");
+        Bundle arg = getArguments();
+        if (arg != null) {
+            searchWord = arg.getString("queryString");
+            listItem = (ListItem)arg.getSerializable("CLASS");
         }
 
     }
@@ -42,7 +44,7 @@ public class SearchFragment extends Fragment {
         Context context = view.getContext();
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.checkListRecyclerView);
-        ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList());
+        ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList(listItem.getListItems()));
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
@@ -66,12 +68,12 @@ public class SearchFragment extends Fragment {
 
     }
 
-    private List<CheckList> createCheckList() {
+    private List<CheckList> createCheckList(List<Items> items) {
 
         List<CheckList> dataSet = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < items.size(); i++) {
             CheckList data = new CheckList();
-            data.setTitle(i + "巻");
+            data.setTitle(items.get(i).getItem().getTitle());
             dataSet.add(data);
         }
         return dataSet;

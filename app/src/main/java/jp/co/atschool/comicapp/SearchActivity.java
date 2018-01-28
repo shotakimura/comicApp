@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
                         List<Items> items = list.getListItems();
                         Item item = items.get(0).getItem();
                         Timber.d("title: " + item.getTitle());
-                        makeResultView(s);
+                        makeResultView(s, list);
                         Timber.d("faaaaaaaaa");
                         Integer count = list.getCount();
                         Timber.d("count: " + count);
@@ -85,13 +85,14 @@ public class SearchActivity extends AppCompatActivity {
         return null;
     }
 
-    public void makeResultView(String s) {
+    public void makeResultView(String s, ListItem listItem) {
         SearchFragment fragment = new SearchFragment();
 
-        Bundle args = new Bundle();
+        Bundle arg = new Bundle();
         //値を渡す
-        args.putString("keyword", s);
-        fragment.setArguments(args);
+        arg.putString("queryString", s);
+        arg.putSerializable("CLASS", listItem);
+        fragment.setArguments(arg);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame, fragment);

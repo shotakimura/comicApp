@@ -12,6 +12,6 @@ public class ChecklistViewHolder extends RecyclerView.ViewHolder {
     public CheckBox checkTitle;
     public ChecklistViewHolder(View itemView) {
         super(itemView);
-        checkTitle = (CheckBox) itemView.findViewById(R.id.checkTitle);
+        checkTitle = itemView.findViewById(R.id.checkTitle);
     }
 }
