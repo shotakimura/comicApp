@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Created by shotakimura on 2018/01/22.
  */
@@ -22,6 +24,7 @@ public class SearchFragment extends Fragment {
     private TextView mTextView;
     private String searchWord;
     ListItem listItem;
+    List<Items> Items;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,17 @@ public class SearchFragment extends Fragment {
         Bundle arg = getArguments();
         if (arg != null) {
             searchWord = arg.getString("queryString");
-            listItem = (ListItem)arg.getSerializable("CLASS");
+        //    listItem = (ListItem)arg.getSerializable("CLASS");
+            ContainerList container = (ContainerList)arg.getSerializable("CLASS");
+            listItem = container.getContainer().get(0);
+            Timber.d("size: " + container.getContainer().size());
+           for(int i = 0; i < container.getContainer().size(); i++) {
+               //   Items.addAll(container.getContainer().get(i).getListItems());
+               for (int j = 0; j < container.getContainer().get(i).getListItems().size(); j++) {
+                   //   Timber.d("title" + i + ": " + container.getContainer().get(i).getListItems().get(j).getItem().getTitle());
+               }
+           }
+
         }
 
     }

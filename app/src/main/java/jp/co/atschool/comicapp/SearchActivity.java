@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +21,9 @@ import timber.log.Timber;
 public class SearchActivity extends AppCompatActivity {
 
     SearchView mSearchView;
+    Integer page = 1;
+
+    List<ListItem> containerList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,26 +38,35 @@ public class SearchActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String s) {
-                String encodedStr = getURLEncStr(s);
+                mSearchView.clearFocus();
+
+                final String encodedStr = getURLEncStr(s);
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://app.rakuten.co.jp/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 API_Interface api = retrofit.create(API_Interface.class);
-                Call<ListItem> call = api.getItem(encodedStr);
+                Call<ListItem> call = api.getItem(encodedStr, page);
 
                 call.enqueue(new Callback<ListItem>() {
                     @Override
                     public void onResponse(Call<ListItem> call, Response<ListItem> response) {
                         ListItem list = response.body();
-                        List<Items> items = list.getListItems();
-                        Item item = items.get(0).getItem();
-                        Timber.d("title: " + item.getTitle());
-                        makeResultView(s, list);
-                        Timber.d("faaaaaaaaa");
+                        Timber.d("title: " + list.getListItems().get(0).getItem().getTitle());
+
                         Integer count = list.getCount();
-                        Timber.d("count: " + count);
+
+                        containerList.add(list);
+
+                        Integer pageCount = count/30;
+
+                        if(pageCount == 0) {
+                            makeResultView(s);
+                        } else {
+                            getResult(s, page, pageCount);
+                        }
+
                     }
 
                     @Override
@@ -75,6 +88,43 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    //もうちょっときれいにしたい
+    public  void getResult(String s, Integer page, Integer pageCount) {
+        page++;
+        pageCount--;
+        final String encodedStr = getURLEncStr(s);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://app.rakuten.co.jp/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        API_Interface api = retrofit.create(API_Interface.class);
+        Call<ListItem> call = api.getItem(encodedStr, page);
+
+        call.enqueue(new Callback<ListItem>() {
+            @Override
+            public void onResponse(Call<ListItem> call, Response<ListItem> response) {
+                ListItem list = response.body();
+                containerList.add(list);
+                if(pageCount == 0) {
+                    makeResultView(s);
+                } else {
+                    getResult(encodedStr, page, pageCount);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListItem> call, Throwable t) {
+                Timber.d("foooooooooo");
+            }
+        });
+
+    }
+
     private String getURLEncStr(String s) {
         if(s == null) return null;
         try {
@@ -85,13 +135,23 @@ public class SearchActivity extends AppCompatActivity {
         return null;
     }
 
-    public void makeResultView(String s, ListItem listItem) {
+    public void makeResultView(String s) {
         SearchFragment fragment = new SearchFragment();
+
+        ContainerList container = new ContainerList();
+        container.setContainer(containerList);
+        //container.container = containerList;
+
+        for(int i = 0; i < container.getContainer().size(); i++) {
+            for (int j = 0; j < container.getContainer().get(i).getListItems().size(); j++) {
+                   Timber.d("title" + i + ": " + container.getContainer().get(i).getListItems().get(j).getItem().getTitle());
+            }
+        }
 
         Bundle arg = new Bundle();
         //値を渡す
         arg.putString("queryString", s);
-        arg.putSerializable("CLASS", listItem);
+        arg.putSerializable("CLASS", container);
         fragment.setArguments(arg);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
