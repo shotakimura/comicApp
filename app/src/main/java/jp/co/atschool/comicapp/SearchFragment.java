@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -23,27 +24,27 @@ public class SearchFragment extends Fragment {
 
     private TextView mTextView;
     private String searchWord;
-    ListItem listItem;
-    List<Items> Items;
+    List<Items> Items = new ArrayList<>();
+    Realm mRealm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRealm = Realm.getDefaultInstance();
+
         Bundle arg = getArguments();
         if (arg != null) {
             searchWord = arg.getString("queryString");
         //    listItem = (ListItem)arg.getSerializable("CLASS");
             ContainerList container = (ContainerList)arg.getSerializable("CLASS");
-            listItem = container.getContainer().get(0);
             Timber.d("size: " + container.getContainer().size());
            for(int i = 0; i < container.getContainer().size(); i++) {
-               //   Items.addAll(container.getContainer().get(i).getListItems());
-               for (int j = 0; j < container.getContainer().get(i).getListItems().size(); j++) {
-                   //   Timber.d("title" + i + ": " + container.getContainer().get(i).getListItems().get(j).getItem().getTitle());
-               }
+               Items.addAll(container.getContainer().get(i).getListItems());
            }
 
         }
+
 
     }
 
@@ -57,7 +58,7 @@ public class SearchFragment extends Fragment {
         Context context = view.getContext();
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.checkListRecyclerView);
-        ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList(listItem.getListItems()));
+        ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList(Items));
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
@@ -79,6 +80,12 @@ public class SearchFragment extends Fragment {
 
         mTextView.setText(searchWord);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
     private List<CheckList> createCheckList(List<Items> items) {

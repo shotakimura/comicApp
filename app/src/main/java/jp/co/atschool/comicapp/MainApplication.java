@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
+import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -23,6 +24,9 @@ public class MainApplication extends Application {
 
         //bootstrap
         TypefaceProvider.registerDefaultIconSets();
+
+        //Realm
+        Realm.init(this);
 
         //timber
         if (BuildConfig.DEBUG) {
