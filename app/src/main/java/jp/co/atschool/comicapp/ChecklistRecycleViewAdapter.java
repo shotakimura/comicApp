@@ -14,6 +14,8 @@ import java.util.List;
 public class ChecklistRecycleViewAdapter extends RecyclerView.Adapter<ChecklistViewHolder>{
     private List<CheckList> list;
 
+    private View.OnClickListener listener;
+
     public ChecklistRecycleViewAdapter(List<CheckList> list) {
         this.list = list;
     }
@@ -28,6 +30,17 @@ public class ChecklistRecycleViewAdapter extends RecyclerView.Adapter<ChecklistV
     @Override
     public void onBindViewHolder(ChecklistViewHolder holder, int position) {
         holder.checkTitle.setText(list.get(position).getTitle());
+        holder.checkTitle.setId(holder.getAdapterPosition());
+        holder.checkTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(view);
+            }
+        });
+    }
+
+    public void setOnItemClickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
     @Override

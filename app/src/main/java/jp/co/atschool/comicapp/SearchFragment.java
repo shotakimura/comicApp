@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,8 +24,12 @@ import timber.log.Timber;
 public class SearchFragment extends Fragment {
 
     private TextView mTextView;
+    //検索したワード
     private String searchWord;
+    //検索結果のリスト
     List<Items> Items = new ArrayList<>();
+    //チェックボックスの値のリスト
+    List<Boolean> checks = new ArrayList<>();
     Realm mRealm;
 
     @Override
@@ -36,7 +41,6 @@ public class SearchFragment extends Fragment {
         Bundle arg = getArguments();
         if (arg != null) {
             searchWord = arg.getString("queryString");
-        //    listItem = (ListItem)arg.getSerializable("CLASS");
             ContainerList container = (ContainerList)arg.getSerializable("CLASS");
             Timber.d("size: " + container.getContainer().size());
            for(int i = 0; i < container.getContainer().size(); i++) {
@@ -55,7 +59,7 @@ public class SearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Context context = view.getContext();
+        final Context context = view.getContext();
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.checkListRecyclerView);
         ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList(Items));
@@ -66,6 +70,14 @@ public class SearchFragment extends Fragment {
         rv.setLayoutManager(llm);
 
         rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CheckBox checkBox = view.findViewById(view.getId());
+                checks.set(view.getId(), checkBox.isChecked());
+            }
+        });
 
         // 先ほどのレイアウトをここでViewとして作成します
         return view;
@@ -95,6 +107,8 @@ public class SearchFragment extends Fragment {
             CheckList data = new CheckList();
             data.setTitle(items.get(i).getItem().getTitle());
             dataSet.add(data);
+
+            checks.add(true);
         }
         return dataSet;
     }
