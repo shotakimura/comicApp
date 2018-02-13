@@ -7,9 +7,9 @@ import java.util.List;
  */
 
 public class ListItem {
-    public List<Items> Items;
+    private List<Items> Items;
 
-    public Integer count;
+    private Integer count;
 
     public List<Items> getListItems() {
         return Items;

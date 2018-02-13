@@ -5,7 +5,7 @@ package jp.co.atschool.comicapp;
  */
 
 public class CheckList {
-    public String title;
+    private String title;
 
     public String getTitle() {
         return title;

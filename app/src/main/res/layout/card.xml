@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/imageCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
@@ -24,6 +24,7 @@
             android:src="@mipmap/onepiece78" />
 
         <TextView
+            android:id="@+id/titleCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="0dp"
@@ -31,9 +32,10 @@
             android:paddingTop="5dp"
             android:gravity="center_horizontal"
             android:textSize="18sp"
-            android:text="78"/>
+            android:text="ワンピース　78"/>
 
         <TextView
+            android:id="@+id/salesDateCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="20dp"

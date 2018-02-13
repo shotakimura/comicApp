@@ -56,7 +56,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         Integer count = list.getCount();
 
-                        if(count > 0) {
+                         if(count > 0) {
                             containerList.add(list);
 
                             Integer pageCount = count / 30;
@@ -66,7 +66,9 @@ public class SearchActivity extends AppCompatActivity {
                             } else {
                                 getResult(s, page + 1, pageCount - 1);
                             }
-                        }
+                         } else {
+                       //      Toast.makeText(this, s + "が見つかりません",Toast.LENGTH_SHORT).show();
+                         }
 
                     }
 
@@ -151,7 +153,6 @@ public class SearchActivity extends AppCompatActivity {
         transaction.add(R.id.frame, fragment);
         // 最後にcommitを使用することで変更を反映します
         transaction.commit();
-
     }
 
 }

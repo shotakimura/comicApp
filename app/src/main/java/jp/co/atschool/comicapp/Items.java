@@ -5,7 +5,7 @@ package jp.co.atschool.comicapp;
  */
 
 public class Items {
-    Item Item;
+    private Item Item;
 
     public Item getItem() {
         return Item;

@@ -13,7 +13,7 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/sample_card"/>
+            tools:listitem="@layout/card"/>
 
 
     </LinearLayout>

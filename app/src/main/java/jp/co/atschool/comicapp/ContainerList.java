@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class ContainerList implements Serializable {
-    public List<ListItem> container;
+    private List<ListItem> container;
 
 
     public List<ListItem> getContainer() {
