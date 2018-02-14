@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import timber.log.Timber;
+
 /**
  * Created by shotakimura on 2018/02/13.
  */
@@ -28,6 +30,7 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHolder
         //  holder.imageCard.setImageResource(cards.get(position).getLargeImageUrl());
         holder.titleCard.setText(cards.getCards().get(position).getTitle());
         holder.salesDateCard.setText(cards.getCards().get(position).getSalesDate());
+        Timber.d("aaaaaaa");
     }
 
     @Override

@@ -50,10 +50,13 @@ public class MainActivity extends AppCompatActivity {
 //
 //        rv.setAdapter(adapter);
 
-        ArrayList<Cards> titles = new ArrayList<>();
-        titles.add(createCards());
-        titles.add(createCards());
-        titles.add(createCards());
+        ArrayList<Cards> cardsSet = new ArrayList<>();
+        cardsSet.add(createCards());
+        cardsSet.add(createCards());
+        cardsSet.add(createCards());
+
+        Titles titles = new Titles();
+        titles.setTitles(cardsSet);
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
         TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import timber.log.Timber;
 
 /**
  * Created by shotakimura on 2018/02/14.
@@ -13,10 +13,9 @@ import java.util.List;
 
 public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleViewHolder>{
 
-    private final List<Cards> titles;
-    private Cards cards;
+    private final Titles titles;
 
-    public TitleRecyclerViewAdapter(List<Cards> titles) {
+    public TitleRecyclerViewAdapter(Titles titles) {
         this.titles = titles;
     }
 
@@ -30,7 +29,8 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleViewHold
 
     @Override
     public void onBindViewHolder(TitleViewHolder holder, int position) {
-        holder.titleComic.setText(cards.getTitle());
+        holder.titleComic.setText(titles.getTitles().get(position).getTitle());
+        Timber.d(titles.getTitles().get(position).getTitle());
     }
 
     @Override
