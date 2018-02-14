@@ -10,6 +10,7 @@ import android.widget.TextView;
  */
 
 public class CardViewHolder extends RecyclerView.ViewHolder {
+
     public ImageView imageCard;
     public TextView titleCard;
     public TextView salesDateCard;
@@ -18,5 +19,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         imageCard = itemView.findViewById(R.id.imageCard);
         titleCard = itemView.findViewById(R.id.titleCard);
         salesDateCard = itemView.findViewById(R.id.salesDateCard);
+    }
+
+    public void bindViewHolder(Card card) {
+        CardViewHolder mCardViewHolder = null;
+        mCardViewHolder.titleCard.setText(card.getTitle());
+        mCardViewHolder.salesDateCard.setText(card.getSalesDate());
     }
 }

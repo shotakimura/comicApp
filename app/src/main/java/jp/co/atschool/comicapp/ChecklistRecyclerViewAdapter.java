@@ -11,12 +11,12 @@ import java.util.List;
  * Created by shotakimura on 2018/01/27.
  */
 
-public class ChecklistRecycleViewAdapter extends RecyclerView.Adapter<ChecklistViewHolder>{
+public class ChecklistRecyclerViewAdapter extends RecyclerView.Adapter<ChecklistViewHolder>{
     private List<CheckList> list;
 
     private View.OnClickListener listener;
 
-    public ChecklistRecycleViewAdapter(List<CheckList> list) {
+    public ChecklistRecyclerViewAdapter(List<CheckList> list) {
         this.list = list;
     }
 

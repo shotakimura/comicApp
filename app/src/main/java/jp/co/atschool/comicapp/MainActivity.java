@@ -11,45 +11,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
     Realm mRealm;
+
+    private RecyclerView mVerticalSampleRecyclerView;
+    private VerticalRecyclerViewAdapter mVerticalRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRealm = Realm.getDefaultInstance();
+//        mRealm = Realm.getDefaultInstance();
+//
+//        mRealm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                RealmResults<ComicTitle> comicTitles = realm.where(ComicTitle.class).findAll();
+//                for (ComicTitle comicTitle:comicTitles
+//                     ) {
+//                    Timber.d("title: " + comicTitle.getTitle());
+//                }
+//            }
+//        });
+//
+//
+//        RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+//        CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter(this.createCards());
+//
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
+//
+//        rv.setHasFixedSize(true);
+//
+//        rv.setLayoutManager(llm);
+//
+//        rv.setAdapter(adapter);
 
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmResults<ComicTitle> comicTitles = realm.where(ComicTitle.class).findAll();
-                for (ComicTitle comicTitle:comicTitles
-                     ) {
-                    Timber.d("title: " + comicTitle.getTitle());
-                }
-            }
-        });
+        ArrayList<Cards> titles = new ArrayList<>();
+        titles.add(createCards());
+        titles.add(createCards());
+        titles.add(createCards());
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-        CardRecycleViewAdapter adapter = new CardRecycleViewAdapter(this.createCards());
+        TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
+        llm.setOrientation(LinearLayoutManager.VERTICAL); // ここで横方向に設定
 
         rv.setHasFixedSize(true);
 
         rv.setLayoutManager(llm);
 
         rv.setAdapter(adapter);
+
+     /*   mVerticalSampleRecyclerView = findViewById(R.id.cardRecyclerView);
+
+        // LayoutManager
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mVerticalSampleRecyclerView.setLayoutManager(linearLayoutManager);
+
+        // Adapter
+        mVerticalRecyclerViewAdapter = new VerticalRecyclerViewAdapter();
+        mVerticalSampleRecyclerView.setAdapter(mVerticalRecyclerViewAdapter);
+
+        // リストをセット
+        ArrayList<Cards> verticalItems = new ArrayList<>();
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+        verticalItems.add(createCards());
+
+        // リストセット・更新
+        mVerticalRecyclerViewAdapter.setList(verticalItems);
+        mVerticalRecyclerViewAdapter.notifyDataSetChanged(); */
     }
 
-    private List<Card> createCards() {
+    private Cards createCards() {
 
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -59,8 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
             cards.add(card);
         }
-        return cards;
+
+        Cards cardset = new Cards();
+        cardset.setCards(cards);
+        cardset.setTitle("ワンピース");
+
+        return cardset;
     }
+
 
     public void startSearch(View v){
         Intent intent = new Intent(this, SearchActivity.class);

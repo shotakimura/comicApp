@@ -5,16 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 /**
  * Created by shotakimura on 2018/02/13.
  */
 
-public class CardRecycleViewAdapter extends RecyclerView.Adapter<CardViewHolder> {
-    private List<Card> cards;
+public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHolder> {
+    private Cards cards;
 
-    public CardRecycleViewAdapter(List<Card> cards) {
+    public CardRecyclerViewAdapter(Cards cards) {
         this.cards = cards;
     }
 
@@ -27,13 +25,13 @@ public class CardRecycleViewAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-      //  holder.imageCard.setImageResource(cards.get(position).getLargeImageUrl());
-        holder.titleCard.setText(cards.get(position).getTitle());
-        holder.salesDateCard.setText(cards.get(position).getSalesDate());
+        //  holder.imageCard.setImageResource(cards.get(position).getLargeImageUrl());
+        holder.titleCard.setText(cards.getCards().get(position).getTitle());
+        holder.salesDateCard.setText(cards.getCards().get(position).getSalesDate());
     }
 
     @Override
     public int getItemCount() {
-        return cards.size();
+        return cards.getCards().size();
     }
 }

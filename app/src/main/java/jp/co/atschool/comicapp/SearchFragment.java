@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment {
         final Context context = view.getContext();
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.checkListRecyclerView);
-        ChecklistRecycleViewAdapter adapter = new ChecklistRecycleViewAdapter(this.createCheckList(Items));
+        ChecklistRecyclerViewAdapter adapter = new ChecklistRecyclerViewAdapter(this.createCheckList(Items));
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
