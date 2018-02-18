@@ -1,10 +1,8 @@
 
 package jp.co.atschool.comicapp;
 
-import java.util.List;
-
+import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -18,8 +16,7 @@ public class ComicTitle extends RealmObject {
 
     private String title;
 
-    @Ignore
-    private List<Comic> comics;
+    private RealmList<Comic> comics;
 
     public long getId() {
         return id;
@@ -33,7 +30,7 @@ public class ComicTitle extends RealmObject {
         this.id = id;
     }
 
-    public List<Comic> getComics() {
+    public RealmList<Comic> getComics() {
         return comics;
     }
 
@@ -41,7 +38,7 @@ public class ComicTitle extends RealmObject {
         this.title = title;
     }
 
-    public void setComics(List<Comic> comics) {
+    public void setComics(RealmList<Comic> comics) {
         this.comics = comics;
     }
 

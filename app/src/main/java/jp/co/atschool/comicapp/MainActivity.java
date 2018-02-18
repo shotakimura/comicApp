@@ -42,19 +42,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(comicTitles.size() > 0) {
+            RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+            CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
+            adapter.setList((ArrayList<Card>) createCards(comicTitles.get(0)).getCards());
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-        CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
-        adapter.setList((ArrayList<Card>) createCards().getCards());
+            LinearLayoutManager llm = new LinearLayoutManager(this);
+            llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
+            rv.setHasFixedSize(true);
 
-        rv.setHasFixedSize(true);
+            rv.setLayoutManager(llm);
 
-        rv.setLayoutManager(llm);
-
-        rv.setAdapter(adapter);
+            rv.setAdapter(adapter);
+        }
 
 //        ArrayList<Cards> cardsSet = new ArrayList<>();
 //        cardsSet.add(createCards());
@@ -113,22 +114,22 @@ public class MainActivity extends AppCompatActivity {
         return verticalItem;
     }
 
-    private Cards createCards() {
+    private Cards createCards(ComicTitle comicTitle) {
 
-     //   Timber.d(comicTitle.getComics().get(0).getTitle());
+        Timber.d(comicTitle.getComics().get(0).getTitle());
 
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < comicTitle.getComics().size(); i++) {
             Card card = new Card();
-            card.setTitle("ワンピース (" + i + ")");
-            card.setSalesDate("2017/" + i + "/10");
-
+            card.setTitle(comicTitle.getComics().get(i).getTitle());
+            card.setSalesDate(comicTitle.getComics().get(i).getSalesDate());
+            card.setLargeImageUrl(comicTitle.getComics().get(i).getLargeImageUrl());
             cards.add(card);
         }
 
         Cards cardset = new Cards();
         cardset.setCards(cards);
-        cardset.setTitle("ワンピース");
+        cardset.setTitle(comicTitle.getTitle());
 
         return cardset;
     }

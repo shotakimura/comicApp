@@ -118,7 +118,7 @@ public class SearchFragment extends Fragment {
                         EditText titleText = view.findViewById(R.id.searchText);
                         SpannableStringBuilder saveTitle = (SpannableStringBuilder) titleText.getText();
                         comicTitle.setTitle(saveTitle.toString());
-                        List<Comic> comics = makeSaveData();
+                        RealmList<Comic> comics = makeSaveData(realm);
                         comicTitle.setComics(comics);
                         Timber.d("saves: " + comics);
                         Toast.makeText(view.getContext(),comicTitle.getTitle() + "を保存しました",Toast.LENGTH_SHORT).show();
@@ -148,15 +148,14 @@ public class SearchFragment extends Fragment {
         return dataSet;
     }
 
-    public List<Comic> makeSaveData() {
-        List<Comic> comics = new RealmList<>();
+    public RealmList<Comic> makeSaveData(Realm realm) {
+        RealmList<Comic> comics = new RealmList<>();
 
         for (int i = 0; i < Items.size(); i++) {
             if(checks.get(i)) {
-                Comic comic = new Comic();
-                comic.setId(i);
+                Comic comic = realm.createObject(Comic.class, i);
                 comic.setTitle(Items.get(i).getItem().getTitle());
-                comic.setTitle(Items.get(i).getItem().getTitleKana());
+                comic.setTitleKana(Items.get(i).getItem().getTitleKana());
                 comic.setSeriesName(Items.get(i).getItem().getSeriesName());
                 comic.setSeriesNameKana(Items.get(i).getItem().getSeriesNameKana());
                 comic.setAuthor(Items.get(i).getItem().getAuthor());
