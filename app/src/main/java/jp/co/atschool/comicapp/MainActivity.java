@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
     Realm mRealm;
+    List<ComicTitle> comicTitles = new ArrayList<>();
 
     private RecyclerView mVerticalSampleRecyclerView;
     private VerticalRecyclerViewAdapter mVerticalRecyclerViewAdapter;
@@ -24,45 +27,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mRealm = Realm.getDefaultInstance();
-//
-//        mRealm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                RealmResults<ComicTitle> comicTitles = realm.where(ComicTitle.class).findAll();
-//                for (ComicTitle comicTitle:comicTitles
-//                     ) {
-//                    Timber.d("title: " + comicTitle.getTitle());
-//                }
-//            }
-//        });
-//
-//
-//        RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-//        CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter(this.createCards());
-//
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
-//
-//        rv.setHasFixedSize(true);
-//
-//        rv.setLayoutManager(llm);
-//
-//        rv.setAdapter(adapter);
+        mRealm = Realm.getDefaultInstance();
 
-        ArrayList<Cards> cardsSet = new ArrayList<>();
-        cardsSet.add(createCards());
-        cardsSet.add(createCards());
-        cardsSet.add(createCards());
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<ComicTitle> results = realm.where(ComicTitle.class).findAll();
+                for (ComicTitle result:results
+                     ) {
+                    Timber.d("title: " + result.getTitle());
+                    comicTitles.add(result);
+                }
+            }
+        });
 
-        Titles titles = new Titles();
-        titles.setTitles(cardsSet);
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-        TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
+        CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
+        adapter.setList((ArrayList<Card>) createCards(comicTitles.get(0)).getCards());
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL); // ここで横方向に設定
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
 
         rv.setHasFixedSize(true);
 
@@ -70,36 +55,69 @@ public class MainActivity extends AppCompatActivity {
 
         rv.setAdapter(adapter);
 
-     /*   mVerticalSampleRecyclerView = findViewById(R.id.cardRecyclerView);
+//        ArrayList<Cards> cardsSet = new ArrayList<>();
+//        cardsSet.add(createCards());
+//        cardsSet.add(createCards());
+//        cardsSet.add(createCards());
+//
+//        Titles titles = new Titles();
+//        titles.setTitles(cardsSet);
+//
+//        Timber.d("aaaaaaaa" + String.valueOf(titles));
+//
+//        RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+//        TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
+//
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setOrientation(LinearLayoutManager.VERTICAL); // ここで横方向に設定
+//
+//        rv.setHasFixedSize(true);
+//
+//        rv.setLayoutManager(llm);
+//
+//        rv.setAdapter(adapter);
 
-        // LayoutManager
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mVerticalSampleRecyclerView.setLayoutManager(linearLayoutManager);
-
-        // Adapter
-        mVerticalRecyclerViewAdapter = new VerticalRecyclerViewAdapter();
-        mVerticalSampleRecyclerView.setAdapter(mVerticalRecyclerViewAdapter);
-
-        // リストをセット
-        ArrayList<Cards> verticalItems = new ArrayList<>();
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-        verticalItems.add(createCards());
-
-        // リストセット・更新
-        mVerticalRecyclerViewAdapter.setList(verticalItems);
-        mVerticalRecyclerViewAdapter.notifyDataSetChanged(); */
+//       mVerticalSampleRecyclerView = findViewById(R.id.cardRecyclerView);
+//
+//        // LayoutManager
+//        LinearLayoutManager linearLayoutManager =
+//                new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+//        mVerticalSampleRecyclerView.setLayoutManager(linearLayoutManager);
+//
+//        // Adapter
+//        mVerticalRecyclerViewAdapter = new VerticalRecyclerViewAdapter();
+//        mVerticalSampleRecyclerView.setAdapter(mVerticalRecyclerViewAdapter);
+//
+//        // リストをセット
+//        ArrayList<VerticalItem> verticalItems = new ArrayList<>();
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//        verticalItems.add(getVerticalItem());
+//
+//        // リストセット・更新
+//        mVerticalRecyclerViewAdapter.setList(verticalItems);
+//        mVerticalRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private Cards createCards() {
+    private VerticalItem getVerticalItem() {
+        ArrayList viewItems = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            viewItems.add(new ViewItem());
+        }
+        VerticalItem verticalItem = new VerticalItem(viewItems);
+        return verticalItem;
+    }
+
+    private Cards createCards(ComicTitle comicTitle) {
+
+        Timber.d((Throwable) comicTitle.getComics());
 
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             Card card = new Card();
             card.setTitle("ワンピース (" + i + ")");
             card.setSalesDate("2017/" + i + "/10");

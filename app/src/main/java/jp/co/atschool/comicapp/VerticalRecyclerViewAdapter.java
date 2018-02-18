@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * Created by shotakimura on 2018/02/13.
  */
 
-public class VerticalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class VerticalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private ArrayList<Object> mList;
     private static final int HORIZONTAL_VIEW_TYPE = 0;
 
@@ -30,7 +31,7 @@ public class VerticalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemViewType(int position) {
         Object item = mList.get(position);
-        if (item instanceof Cards) {
+        if (item instanceof VerticalItem) {
             return HORIZONTAL_VIEW_TYPE;
         }
         return super.getItemViewType(position);
@@ -40,8 +41,9 @@ public class VerticalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case HORIZONTAL_VIEW_TYPE:
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.title, parent, false);
-                return new HorizontalRecyclerViewHolder(itemView);
+                View itemView =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.horizontal_recycler_view, parent, false);
+                return new HorizontalRecycleViewHolder(itemView);
         }
         return null;
     }
@@ -50,13 +52,13 @@ public class VerticalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case HORIZONTAL_VIEW_TYPE:
-                HorizontalRecyclerViewHolder
-                        horizontalRecyclerViewHolder = (HorizontalRecyclerViewHolder) holder;
+                HorizontalRecycleViewHolder
+                        horizontalRecycleViewHolder = (HorizontalRecycleViewHolder) holder;
                 // 横に並ぶアイテムをセット
-                Cards Cards = (Cards) mList.get(position);
-                horizontalRecyclerViewHolder.bindViewHolder(Cards);
+                VerticalItem verticalItem = (VerticalItem) mList.get(position);
+                horizontalRecycleViewHolder.bindViewHolder(verticalItem);
                 break;
         }
     }
-
 }
+

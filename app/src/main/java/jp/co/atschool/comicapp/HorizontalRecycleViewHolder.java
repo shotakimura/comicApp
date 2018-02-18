@@ -7,18 +7,18 @@ import android.view.View;
 import java.util.ArrayList;
 
 /**
- * Created by shotakimura on 2018/02/13.
+ * Created by shotakimura on 2018/02/17.
  */
 
-public class HorizontalRecyclerViewHolder extends RecyclerView.ViewHolder {
+public class HorizontalRecycleViewHolder extends RecyclerView.ViewHolder {
     private RecyclerView mHorizontalRecyclerView;
     private HorizontalRecyclerViewAdapter mHorizontalRecyclerViewAdapter;
 
-    public HorizontalRecyclerViewHolder(View itemView) {
+    public HorizontalRecycleViewHolder(View itemView) {
         super(itemView);
 
         // RecyclerView
-        mHorizontalRecyclerView = itemView.findViewById(R.id.recyclerComics);
+        mHorizontalRecyclerView = itemView.findViewById(R.id.horizontal_recycler_view);
 
         // LayoutManager(Horizontal)
         LinearLayoutManager linearLayoutManager =
@@ -30,10 +30,9 @@ public class HorizontalRecyclerViewHolder extends RecyclerView.ViewHolder {
         mHorizontalRecyclerView.setAdapter(mHorizontalRecyclerViewAdapter);
     }
 
-    public void bindViewHolder(Cards cards) {
+    public void bindViewHolder(VerticalItem verticalItem) {
         // データをセット
-        mHorizontalRecyclerViewAdapter.setList((ArrayList) cards.getCards());
+        mHorizontalRecyclerViewAdapter.setList((ArrayList) verticalItem.getList());
         mHorizontalRecyclerViewAdapter.notifyDataSetChanged();
     }
-
 }

@@ -9,12 +9,12 @@ import android.widget.TextView;
  * Created by shotakimura on 2018/02/13.
  */
 
-public class CardViewHolder extends RecyclerView.ViewHolder {
+public class CardRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView imageCard;
     public TextView titleCard;
     public TextView salesDateCard;
-    public CardViewHolder(View itemView) {
+    public CardRecyclerViewHolder(View itemView) {
         super(itemView);
         imageCard = itemView.findViewById(R.id.imageCard);
         titleCard = itemView.findViewById(R.id.titleCard);
@@ -22,8 +22,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindViewHolder(Card card) {
-        CardViewHolder mCardViewHolder = null;
-        mCardViewHolder.titleCard.setText(card.getTitle());
-        mCardViewHolder.salesDateCard.setText(card.getSalesDate());
+       // imageCard.setImageResource(card.getLargeImageUrl());
+        titleCard.setText(card.getTitle());
+        salesDateCard.setText(card.getSalesDate());
     }
 }

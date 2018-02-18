@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * Created by shotakimura on 2018/02/13.
  */
 
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHolder> {
+public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private ArrayList<Object> mList;
     private static final int VIEW_ITEM_TYPE = 0;
 
@@ -30,30 +31,30 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<CardView
     @Override
     public int getItemViewType(int position) {
         Object item = mList.get(position);
-        if (item instanceof Cards) {
+        if (item instanceof VerticalItem) {
             return VIEW_ITEM_TYPE;
         }
         return super.getItemViewType(position);
     }
 
     @Override
-    public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_ITEM_TYPE:
                 View itemView =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
-                return new CardViewHolder(itemView);
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+                return new ViewItemHolder(itemView);
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case VIEW_ITEM_TYPE:
-                CardViewHolder cardViewHolder = (CardViewHolder) holder;
-                Card card = (Card) mList.get(position);
-                cardViewHolder.bindViewHolder(card);
+                ViewItemHolder viewItemHolder = (ViewItemHolder) holder;
+                ViewItem viewItem = (ViewItem) mList.get(position);
+                viewItemHolder.bindViewHolder(viewItem);
                 break;
         }
     }
