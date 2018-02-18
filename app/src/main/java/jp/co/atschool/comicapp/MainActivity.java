@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 for (ComicTitle result:results
                      ) {
                     Timber.d("title: " + result.getTitle());
+                    Timber.d("comics: " + result.getComics());
                     comicTitles.add(result);
                 }
             }
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
         CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
-        adapter.setList((ArrayList<Card>) createCards(comicTitles.get(0)).getCards());
+        adapter.setList((ArrayList<Card>) createCards().getCards());
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
@@ -112,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
         return verticalItem;
     }
 
-    private Cards createCards(ComicTitle comicTitle) {
+    private Cards createCards() {
 
-        Timber.d((Throwable) comicTitle.getComics());
+     //   Timber.d(comicTitle.getComics().get(0).getTitle());
 
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

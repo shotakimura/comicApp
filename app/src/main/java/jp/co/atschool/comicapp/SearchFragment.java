@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
+import timber.log.Timber;
 
 /**
  * Created by shotakimura on 2018/01/22.
@@ -118,6 +120,7 @@ public class SearchFragment extends Fragment {
                         comicTitle.setTitle(saveTitle.toString());
                         List<Comic> comics = makeSaveData();
                         comicTitle.setComics(comics);
+                        Timber.d("saves: " + comics);
                         Toast.makeText(view.getContext(),comicTitle.getTitle() + "を保存しました",Toast.LENGTH_SHORT).show();
                         startMain();
                     }
@@ -146,7 +149,7 @@ public class SearchFragment extends Fragment {
     }
 
     public List<Comic> makeSaveData() {
-        List<Comic> comics = new ArrayList<>();
+        List<Comic> comics = new RealmList<>();
 
         for (int i = 0; i < Items.size(); i++) {
             if(checks.get(i)) {
