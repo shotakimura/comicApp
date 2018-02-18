@@ -43,47 +43,45 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(comicTitles.size() > 0) {
-            RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-            CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
-            adapter.setList((ArrayList<Card>) createCards(comicTitles.get(0)).getCards());
+//            RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+//            CardRecyclerViewAdapter adapter = new CardRecyclerViewAdapter();
+//            adapter.setList((ArrayList<Card>) createCards(comicTitles.get(0)).getCards());
+//
+//            LinearLayoutManager llm = new LinearLayoutManager(this);
+//            llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
+//
+//            rv.setHasFixedSize(true);
+//
+//            rv.setLayoutManager(llm);
+//
+//            rv.setAdapter(adapter);
 
-            LinearLayoutManager llm = new LinearLayoutManager(this);
-            llm.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
+
+            ArrayList<Cards> cardsSet = new ArrayList<>();
+            for (int i = 0; i < comicTitles.size(); i++) {
+                cardsSet.add(createCards(comicTitles.get(i)));
+            }
+
+            Titles titles = new Titles();
+            titles.setTitles(cardsSet);
+
+            Timber.d("aaaaaaaa" + String.valueOf(titles));
+
+            RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+            TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
+
+            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
             rv.setHasFixedSize(true);
 
             rv.setLayoutManager(llm);
 
             rv.setAdapter(adapter);
-        }
-
-//        ArrayList<Cards> cardsSet = new ArrayList<>();
-//        cardsSet.add(createCards());
-//        cardsSet.add(createCards());
-//        cardsSet.add(createCards());
-//
-//        Titles titles = new Titles();
-//        titles.setTitles(cardsSet);
-//
-//        Timber.d("aaaaaaaa" + String.valueOf(titles));
-//
-//        RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-//        TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
-//
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setOrientation(LinearLayoutManager.VERTICAL); // ここで横方向に設定
-//
-//        rv.setHasFixedSize(true);
-//
-//        rv.setLayoutManager(llm);
-//
-//        rv.setAdapter(adapter);
 
 //       mVerticalSampleRecyclerView = findViewById(R.id.cardRecyclerView);
 //
 //        // LayoutManager
-//        LinearLayoutManager linearLayoutManager =
-//                new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 //        mVerticalSampleRecyclerView.setLayoutManager(linearLayoutManager);
 //
 //        // Adapter
@@ -103,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 //        // リストセット・更新
 //        mVerticalRecyclerViewAdapter.setList(verticalItems);
 //        mVerticalRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     private VerticalItem getVerticalItem() {

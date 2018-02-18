@@ -3,6 +3,7 @@ package jp.co.atschool.comicapp;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -10,12 +11,17 @@ import java.util.ArrayList;
  * Created by shotakimura on 2018/02/17.
  */
 
-public class CardsRecyclerViewHolder extends RecyclerView.ViewHolder {
+public class TitleRecyclerViewHolder extends RecyclerView.ViewHolder {
     private RecyclerView cardsRecyclerView;
     private CardRecyclerViewAdapter cardRecyclerViewAdapter;
 
-    public CardsRecyclerViewHolder(View itemView) {
+    public TextView titleComic;
+
+
+    public TitleRecyclerViewHolder(View itemView) {
         super(itemView);
+
+        titleComic = itemView.findViewById(R.id.titleComic);
 
         // RecyclerView
         cardsRecyclerView = itemView.findViewById(R.id.recyclerComics);
@@ -34,5 +40,8 @@ public class CardsRecyclerViewHolder extends RecyclerView.ViewHolder {
         // データをセット
         cardRecyclerViewAdapter.setList((ArrayList) cards.getCards());
         cardRecyclerViewAdapter.notifyDataSetChanged();
+
+        titleComic.setText(cards.getTitle());
+
     }
 }

@@ -110,10 +110,13 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void execute(Realm realm) {
                         Number max = realm.where(ComicTitle.class).max("id");
+                     //   Timber.d("max: " + max);
                         long newId = 0;
                         if(max != null) {
                             newId = max.longValue() + 1;
                         }
+                     //   Timber.d("Id: " + newId);
+
                         ComicTitle comicTitle = realm.createObject(ComicTitle.class, newId);
                         EditText titleText = view.findViewById(R.id.searchText);
                         SpannableStringBuilder saveTitle = (SpannableStringBuilder) titleText.getText();
@@ -150,10 +153,11 @@ public class SearchFragment extends Fragment {
 
     public RealmList<Comic> makeSaveData(Realm realm) {
         RealmList<Comic> comics = new RealmList<>();
-
+        long id = 0;
         for (int i = 0; i < Items.size(); i++) {
             if(checks.get(i)) {
-                Comic comic = realm.createObject(Comic.class, i);
+//                Comic comic = realm.createObject(Comic.class, id);
+                Comic comic = realm.createObject(Comic.class);
                 comic.setTitle(Items.get(i).getItem().getTitle());
                 comic.setTitleKana(Items.get(i).getItem().getTitleKana());
                 comic.setSeriesName(Items.get(i).getItem().getSeriesName());
@@ -169,6 +173,7 @@ public class SearchFragment extends Fragment {
                 comic.setMediumImageUrl(Items.get(i).getItem().getMediumImageUrl());
                 comic.setSmallImageUrl(Items.get(i).getItem().getSmallImageUrl());
                 comics.add(comic);
+                id++;
             }
         }
         

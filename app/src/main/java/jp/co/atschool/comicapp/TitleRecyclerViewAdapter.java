@@ -31,11 +31,8 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         switch (viewType) {
             case HORIZONTAL_VIEW_TYPE:
                 View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.title, parent, false);
-                return new CardRecyclerViewHolder(inflate);
+                return new TitleRecyclerViewHolder(inflate);
         }
-
-     //   View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.title, parent, false);
-     //   return new TitleViewHolder(inflate);
         return null;
     }
 
@@ -43,11 +40,11 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case HORIZONTAL_VIEW_TYPE:
-                CardsRecyclerViewHolder
-                        cardsRecyclerViewHolder = (CardsRecyclerViewHolder) holder;
+                TitleRecyclerViewHolder
+                        titleRecyclerViewHolder = (TitleRecyclerViewHolder) holder;
                 // 横に並ぶアイテムをセット
                 Cards Cards = (Cards) titles.getTitles().get(position);
-                cardsRecyclerViewHolder.bindViewHolder(Cards);
+                titleRecyclerViewHolder.bindViewHolder(Cards);
                 break;
         }
     }

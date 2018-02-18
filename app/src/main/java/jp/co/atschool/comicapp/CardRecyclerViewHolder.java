@@ -25,7 +25,7 @@ public class CardRecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindViewHolder(Card card) {
-        Picasso.with(imageCard.getContext()).load(card.getLargeImageUrl()git).into(imageCard);
+        Picasso.with(imageCard.getContext()).load(card.getLargeImageUrl()).into(imageCard);
        // imageCard.setImageResource(card.getLargeImageUrl());
         titleCard.setText(card.getTitle());
         salesDateCard.setText(card.getSalesDate());

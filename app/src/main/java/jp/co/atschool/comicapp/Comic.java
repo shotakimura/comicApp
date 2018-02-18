@@ -1,15 +1,14 @@
 package jp.co.atschool.comicapp;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by shotakimura on 2018/01/31.
  */
 
 public class Comic extends RealmObject {
-    @PrimaryKey
-    private long id;
+//    @PrimaryKey
+//    private long id;
     private String title;
     private String titleKana;
     private String seriesName;
@@ -25,9 +24,9 @@ public class Comic extends RealmObject {
     private String mediumImageUrl;
     private String largeImageUrl;
 
-    public long getId() {
-        return id;
-    }
+//    public long getId() {
+//        return id;
+//    }
     public String getTitle() {
         return title;
     }
@@ -63,9 +62,9 @@ public class Comic extends RealmObject {
         return largeImageUrl;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public void setId(long id) {
+//        this.id = id;
+//    }
     public void setTitle(String title) {
         this.title = title;
     }
