@@ -16,7 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -151,9 +156,42 @@ public class SearchFragment extends Fragment {
         return dataSet;
     }
 
+    private RealmList<Comic> sortComic(RealmList<Comic> comics) {
+        Collections.sort(comics, new Comparator<Comic>() {
+            public int compare(Comic o1, Comic o2) {
+                if (o1.getSalesDate() == null || o2.getSalesDate() == null) {
+                    return 0;
+                }
+                SimpleDateFormat sdFormat1 = new SimpleDateFormat("yyyy年MM月DD日");
+                SimpleDateFormat sdFormat2 = new SimpleDateFormat("yyyy年MM月");
+                Date do1;
+                Date do2;
+                try {
+                    if (o1.getSalesDate().indexOf("日") != -1) {
+                        do1 = sdFormat1.parse(o1.getSalesDate());
+                    } else {
+                        do1 = sdFormat2.parse(o1.getSalesDate());
+                    }
+                    if (o2.getSalesDate().indexOf("日") != -1) {
+                        do2 = sdFormat1.parse(o2.getSalesDate());
+                    } else {
+                        do2 = sdFormat2.parse(o2.getSalesDate());
+                    }
+                    return do2.compareTo(do1);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+
+            }
+        });
+        return comics;
+    }
+
     public RealmList<Comic> makeSaveData(Realm realm) {
         RealmList<Comic> comics = new RealmList<>();
-        long id = 0;
+//        long id = 0;
         for (int i = 0; i < Items.size(); i++) {
             if(checks.get(i)) {
 //                Comic comic = realm.createObject(Comic.class, id);
@@ -173,11 +211,11 @@ public class SearchFragment extends Fragment {
                 comic.setMediumImageUrl(Items.get(i).getItem().getMediumImageUrl());
                 comic.setSmallImageUrl(Items.get(i).getItem().getSmallImageUrl());
                 comics.add(comic);
-                id++;
+//                id++;
             }
         }
-        
-        return comics;
+        return sortComic(comics);
+      //  return comics;
     }
 
     public void startMain(){

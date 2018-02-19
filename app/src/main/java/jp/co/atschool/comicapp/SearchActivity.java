@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -34,6 +35,10 @@ public class SearchActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.search);
 
         mSearchView = (SearchView) toolbar.getMenu().findItem(R.id.menu_search).getActionView();
+
+        mSearchView.setQueryHint("登録したい漫画を入力してください");
+
+
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -67,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
                                 getResult(s, page + 1, pageCount - 1);
                             }
                          } else {
-                       //      Toast.makeText(this, s + "が見つかりません",Toast.LENGTH_SHORT).show();
+                                makeToast(s + "が見つかりません");
                          }
 
                     }
@@ -75,6 +80,7 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ListItem> call, Throwable t) {
                         Timber.d("foooooooooo");
+                        makeToast("通信が失敗しました");
                     }
 
                 });
@@ -89,6 +95,21 @@ public class SearchActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setIconified(false);
+        mSearchView.setFocusable(true);
+        mSearchView.requestFocus();
+
+
+    }
+
+    public void makeToast(String s) {
+        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 
     //もうちょっときれいにしたい

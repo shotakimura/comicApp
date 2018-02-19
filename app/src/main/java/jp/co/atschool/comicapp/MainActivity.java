@@ -12,7 +12,6 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 RealmResults<ComicTitle> results = realm.where(ComicTitle.class).findAll();
                 for (ComicTitle result:results
                      ) {
-                    Timber.d("title: " + result.getTitle());
-                    Timber.d("comics: " + result.getComics());
+                //    Timber.d("title: " + result.getTitle());
+                //    Timber.d("comics: " + result.getComics());
                     comicTitles.add(result);
                 }
             }
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             Titles titles = new Titles();
             titles.setTitles(cardsSet);
 
-            Timber.d("aaaaaaaa" + String.valueOf(titles));
+     //       Timber.d("aaaaaaaa" + String.valueOf(titles));
 
             RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
             TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Cards createCards(ComicTitle comicTitle) {
 
-        Timber.d(comicTitle.getComics().get(0).getTitle());
+     //   Timber.d(comicTitle.getComics().get(0).getTitle());
 
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < comicTitle.getComics().size(); i++) {

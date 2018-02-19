@@ -16,6 +16,9 @@
 
         <LinearLayout
             android:id="@+id/editTitle"
+            android:background="@color/bootstrap_brand_danger"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -29,6 +32,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="登録タイトル"
+                android:textColor="#ffffff"
                 android:textSize="20dp" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
@@ -40,9 +44,9 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:text="あああああ"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="md"
+                app:bootstrapSize="lg"
                 tools:layout_editor_absoluteX="149dp"
                 tools:layout_editor_absoluteY="16dp" />
 

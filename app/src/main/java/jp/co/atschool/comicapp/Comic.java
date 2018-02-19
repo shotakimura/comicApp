@@ -66,7 +66,10 @@ public class Comic extends RealmObject {
 //        this.id = id;
 //    }
     public void setTitle(String title) {
-        this.title = title;
+        String saveTitle;
+        saveTitle = title.replace("（", " ");
+        saveTitle = saveTitle.replace("）", "");
+        this.title = saveTitle;
     }
     public void setTitleKana(String titleKana) {
         this.titleKana = titleKana;
