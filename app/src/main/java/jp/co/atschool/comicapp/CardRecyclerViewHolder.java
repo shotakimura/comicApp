@@ -1,5 +1,6 @@
 package jp.co.atschool.comicapp;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,12 +14,17 @@ import com.squareup.picasso.Picasso;
 
 public class CardRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageView imageCard;
-    public TextView titleCard;
-    public TextView salesDateCard;
+    private CardView viewCard;
+
+    private ImageView imageCard;
+    private TextView titleCard;
+    private TextView salesDateCard;
 
     public CardRecyclerViewHolder(View itemView) {
         super(itemView);
+
+        viewCard = itemView.findViewById(R.id.viewCard);
+
         imageCard = itemView.findViewById(R.id.imageCard);
         titleCard = itemView.findViewById(R.id.titleCard);
         salesDateCard = itemView.findViewById(R.id.salesDateCard);
@@ -27,7 +33,18 @@ public class CardRecyclerViewHolder extends RecyclerView.ViewHolder {
     public void bindViewHolder(Card card) {
         Picasso.with(imageCard.getContext()).load(card.getLargeImageUrl()).into(imageCard);
        // imageCard.setImageResource(card.getLargeImageUrl());
-        titleCard.setText(card.getTitle());
+       // titleCard.setText(card.getTitle());
         salesDateCard.setText(card.getSalesDate());
+
+        final String title = card.getTitle();
+        String saveTitle;
+        saveTitle = title.replace("（", " ");
+        saveTitle = saveTitle.replace("）", "");
+        titleCard.setText(saveTitle);
     }
+
+    public CardView getViewCard() {
+        return viewCard;
+    }
+
 }

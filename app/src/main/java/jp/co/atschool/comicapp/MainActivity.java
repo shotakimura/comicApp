@@ -13,7 +13,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity implements TitleRecyclerViewAdapter.CommicListener {
+public class MainActivity extends AppCompatActivity implements TitleRecyclerViewAdapter.CommicRefreshListener {
 
     Realm mRealm;
     List<ComicTitle> comicTitles = new ArrayList<>();
@@ -105,24 +105,62 @@ public class MainActivity extends AppCompatActivity implements TitleRecyclerView
     }
 
     @Override
-    public void onCommicRefreshListener() {
-        // ここにリフレッシュ処理を追加する
+    protected void onRestart() {
+        super.onRestart();
 
-        // 1. Realmから Cards を取得する
-
-        // 2. Adapterに Cardsのsetterを追加する
-
-        // 3.
+        comicRefresh();
     }
 
-    private VerticalItem getVerticalItem() {
-        ArrayList viewItems = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            viewItems.add(new ViewItem());
+    private void comicRefresh() {
+        final List<ComicTitle> comicTitlesRefresh = new ArrayList<>();
+
+        RealmResults<ComicTitle> results = mRealm.where(ComicTitle.class).findAll();
+        for (ComicTitle result:results) {
+            comicTitlesRefresh.add(result);
         }
-        VerticalItem verticalItem = new VerticalItem(viewItems);
-        return verticalItem;
+      //  if(comicTitlesRefresh.size() > 0) {
+
+            ArrayList<Cards> cardsSet = new ArrayList<>();
+            for (int i = 0; i < comicTitlesRefresh.size(); i++) {
+                cardsSet.add(createCards(comicTitlesRefresh.get(i)));
+            }
+
+            Titles titles = new Titles();
+            titles.setTitles(cardsSet);
+
+            if(comicTitles.size() == 0 && comicTitlesRefresh.size() > 0) {
+                RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
+                mAdapter = new TitleRecyclerViewAdapter(this, titles);
+
+                LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+
+                rv.setHasFixedSize(true);
+
+                rv.setLayoutManager(llm);
+
+                rv.setAdapter(mAdapter);
+            } else {
+                mAdapter.updateCards(titles);
+            }
+
+
+      //  }
     }
+
+    @Override
+    public void onCommicRefreshListener() {
+        comicRefresh();
+
+    }
+
+//    private VerticalItem getVerticalItem() {
+//        ArrayList viewItems = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            viewItems.add(new ViewItem());
+//        }
+//        VerticalItem verticalItem = new VerticalItem(viewItems);
+//        return verticalItem;
+//    }
 
     private Cards createCards(ComicTitle comicTitle) {
 

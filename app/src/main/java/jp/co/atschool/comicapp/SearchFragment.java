@@ -222,6 +222,8 @@ public class SearchFragment extends Fragment {
        getFragmentManager().beginTransaction().remove(this).commit();
        //fragmentを消してからページ遷移するS
         Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(new Intent(intent));
 
     }
