@@ -13,10 +13,11 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TitleRecyclerViewAdapter.CommicListener {
 
     Realm mRealm;
     List<ComicTitle> comicTitles = new ArrayList<>();
+    TitleRecyclerViewAdapter mAdapter = null;
 
     private RecyclerView mVerticalSampleRecyclerView;
     private VerticalRecyclerViewAdapter mVerticalRecyclerViewAdapter;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
      //       Timber.d("aaaaaaaa" + String.valueOf(titles));
 
             RecyclerView rv = (RecyclerView) findViewById(R.id.cardRecyclerView);
-            TitleRecyclerViewAdapter adapter = new TitleRecyclerViewAdapter(titles);
+            mAdapter = new TitleRecyclerViewAdapter(this, titles);
 
             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             rv.setLayoutManager(llm);
 
-            rv.setAdapter(adapter);
+            rv.setAdapter(mAdapter);
 
 //       mVerticalSampleRecyclerView = findViewById(R.id.cardRecyclerView);
 //
@@ -101,6 +102,17 @@ public class MainActivity extends AppCompatActivity {
 //        mVerticalRecyclerViewAdapter.setList(verticalItems);
 //        mVerticalRecyclerViewAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onCommicRefreshListener() {
+        // ここにリフレッシュ処理を追加する
+
+        // 1. Realmから Cards を取得する
+
+        // 2. Adapterに Cardsのsetterを追加する
+
+        // 3.
     }
 
     private VerticalItem getVerticalItem() {

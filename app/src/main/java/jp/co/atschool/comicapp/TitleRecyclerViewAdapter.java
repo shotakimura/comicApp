@@ -1,9 +1,13 @@
 package jp.co.atschool.comicapp;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import io.realm.Realm;
 
 /**
  * Created by shotakimura on 2018/02/14.
@@ -13,9 +17,18 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private final Titles titles;
     private static final int HORIZONTAL_VIEW_TYPE = 0;
+    private Realm mRealm;
+    private CommicListener listener;
 
-    public TitleRecyclerViewAdapter(Titles titles) {
+    public interface CommicListener {
+        void onCommicRefreshListener();
+    }
+
+    public TitleRecyclerViewAdapter(Context context, Titles titles) {
+        listener = (CommicListener) context;
         this.titles = titles;
+
+        mRealm = Realm.getDefaultInstance();
     }
 
     public int getItemViewType(int position) {
@@ -43,8 +56,24 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 TitleRecyclerViewHolder
                         titleRecyclerViewHolder = (TitleRecyclerViewHolder) holder;
                 // 横に並ぶアイテムをセット
-                Cards Cards = (Cards) titles.getTitles().get(position);
-                titleRecyclerViewHolder.bindViewHolder(Cards);
+                final Cards cards = (Cards) titles.getTitles().get(position);
+                titleRecyclerViewHolder.bindViewHolder(cards);
+                titleRecyclerViewHolder.getTitleDelete().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        mRealm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                ComicTitle comicTitle = realm.where(ComicTitle.class).equalTo("title", cards.getTitle()).findFirst();
+                                comicTitle.deleteFromRealm();
+                                makeToastHolder(v, cards.getTitle() + "を削除しました");
+
+                                // ここにlistener
+                                listener.onCommicRefreshListener();
+                            }
+                        });
+                    }
+                });
                 break;
         }
     }
@@ -56,4 +85,13 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         }
         return 0;
     }
+
+    public void updateCards(Cards cards) {
+        
+    }
+
+    private void makeToastHolder(View view, String s) {
+        Toast.makeText(view.getContext(),s,Toast.LENGTH_LONG).show();
+    }
+
 }

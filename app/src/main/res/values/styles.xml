@@ -8,27 +8,39 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
+        <!-- ActionBarのスタイル設定 -->
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+    </style>
 
-    <style name="actionBar.NoActionBar">
+    <!-- 背景色の設定とタイトルカラーのスタイル設定 -->
+    <style name="CustomActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/white</item>
+        <item name="background">@android:color/white</item>
+        <item name="titleTextStyle">@style/titleTextStyle</item>
+        <item name="android:actionBarTabStyle">@style/customActionBarTabStyle</item>
+    </style>
+
+    <!-- タイトルカラーの設定 -->
+    <style name="titleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/bootstrap_brand_info</item>
+        <item name="android:fontFamily">@font/baloo_bhaina</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-
-
-    <style name="actionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- タイトルバーの背景色 -->
-        <item name="colorPrimary">@color/bootstrap_brand_info</item>
-        <!-- タイトルバーの文字スタイル -->
-        <item name="android:titleTextStyle">@style/titleTextStyle</item>
+    <style name="customActionBarTabStyle" parent="Base.Widget.AppCompat.ActionBar.TabView">
+        <item name="android:gravity">center</item>
     </style>
 
-    <style name="titleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <!-- タイトルバーの文字色 -->
-        <item name="android:textColor">@color/bootstrap_brand_danger</item>
-        <!-- タイトルバーの文字スタイル -->
-        <item name="android:textStyle">italic</item>
-    </style>
 
 </resources>
