@@ -1,5 +1,6 @@
 package jp.co.atschool.comicapp;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,16 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerVi
 //    public CardRecyclerViewAdapter(Cards cards) {
 //        this.cards = cards;
 //    }
+
+    private CommicListener comiclistener;
+
+    public interface CommicListener {
+        void onCommicListener(Card card);
+    }
+
+    public CardRecyclerViewAdapter(Context context) {
+        comiclistener = (CommicListener) context;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -57,8 +68,18 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerVi
         switch (holder.getItemViewType()) {
             case VIEW_ITEM_TYPE:
                 CardRecyclerViewHolder cardRecyclerViewHolder = (CardRecyclerViewHolder) holder;
-                Card card = (Card) cardList.get(position);
+                final Card card = (Card) cardList.get(position);
                 cardRecyclerViewHolder.bindViewHolder(card);
+                final Card clickCard = card;
+
+                cardRecyclerViewHolder.getViewCard().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      //  Toast.makeText(v.getContext(),clickCard.getTitle(),Toast.LENGTH_SHORT).show();
+
+                        comiclistener.onCommicListener(clickCard);
+                    }
+                });
                 break;
         }
     }

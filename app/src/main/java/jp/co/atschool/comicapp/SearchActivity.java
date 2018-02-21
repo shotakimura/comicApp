@@ -62,37 +62,40 @@ public class SearchActivity extends AppCompatActivity {
                 mSearchView.clearFocus();
                 loading.setVisibility(View.VISIBLE);
 
-                final String encodedStr = getURLEncStr(s);
+              //  final String encodedStr = getURLEncStr(s);
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://app.rakuten.co.jp/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 API_Interface api = retrofit.create(API_Interface.class);
-                Call<ListItem> call = api.getItem(encodedStr, page);
+          //      Call<ListItem> call = api.getItem(encodedStr, page);
+                Call<ListItem> call = api.getItem(s, page);
 
                 call.enqueue(new Callback<ListItem>() {
                     @Override
                     public void onResponse(Call<ListItem> call, Response<ListItem> response) {
                         ListItem list = response.body();
+                        Timber.d(String.valueOf(response));
+
 
                         Integer count = list.getCount();
 
-                         if(count > 0) {
-                            containerList.add(list);
+                            if (count > 0) {
+                                containerList.add(list);
 
-                            Integer pageCount = count / 30;
+                                Integer pageCount = count / 30;
 
-                            if (pageCount == 0) {
-                                makeResultView(s);
+                                if (pageCount == 0) {
+                                    makeResultView(s);
+                                } else {
+                                    getResult(s, page + 1, pageCount - 1);
+                                }
                             } else {
-                                getResult(s, page + 1, pageCount - 1);
-                            }
-                         } else {
                                 makeToast(s + "が見つかりません");
                                 loading.setVisibility(View.INVISIBLE);
 
-                         }
+                        }
 
                     }
 
@@ -134,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //もうちょっときれいにしたい
     public  void getResult(final String s, final Integer page, final Integer pageCount) {
-        final String encodedStr = getURLEncStr(s);
+     //   final String encodedStr = getURLEncStr(s);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -145,7 +148,9 @@ public class SearchActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         API_Interface api = retrofit.create(API_Interface.class);
-        Call<ListItem> call = api.getItem(encodedStr, page);
+      //  Call<ListItem> call = api.getItem(encodedStr, page);
+        Call<ListItem> call = api.getItem(s, page);
+
 
         call.enqueue(new Callback<ListItem>() {
             @Override

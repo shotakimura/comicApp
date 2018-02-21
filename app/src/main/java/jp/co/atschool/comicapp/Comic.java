@@ -61,6 +61,8 @@ public class Comic extends RealmObject {
     public String getLargeImageUrl() {
         return largeImageUrl;
     }
+    public String getItemPrice() { return itemPrice; }
+    public String getItemUrl() { return itemUrl; }
 
 //    public void setId(long id) {
 //        this.id = id;

@@ -13,7 +13,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity implements TitleRecyclerViewAdapter.CommicRefreshListener {
+public class MainActivity extends AppCompatActivity implements TitleRecyclerViewAdapter.CommicRefreshListener, CardRecyclerViewAdapter.CommicListener {
 
     Realm mRealm;
     List<ComicTitle> comicTitles = new ArrayList<>();
@@ -153,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements TitleRecyclerView
 
     }
 
+    @Override
+    public void onCommicListener(Card card) {
+       // Toast.makeText(this,card.getTitle(),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ComicActivity.class);
+        intent.putExtra("DATA", card);
+        startActivity(intent);
+    }
+
 //    private VerticalItem getVerticalItem() {
 //        ArrayList viewItems = new ArrayList<>();
 //        for (int i = 0; i < 10; i++) {
@@ -172,6 +180,13 @@ public class MainActivity extends AppCompatActivity implements TitleRecyclerView
             card.setTitle(comicTitle.getComics().get(i).getTitle());
             card.setSalesDate(comicTitle.getComics().get(i).getSalesDate());
             card.setLargeImageUrl(comicTitle.getComics().get(i).getLargeImageUrl());
+
+            card.setAuthor(comicTitle.getComics().get(i).getAuthor());
+            card.setPublisherName(comicTitle.getComics().get(i).getPublisherName());
+            card.setIsbn(comicTitle.getComics().get(i).getIsbn());
+            card.setItemPrice(comicTitle.getComics().get(i).getItemPrice());
+            card.setItemUrl(comicTitle.getComics().get(i).getItemUrl());
+
             cards.add(card);
         }
 
@@ -187,5 +202,6 @@ public class MainActivity extends AppCompatActivity implements TitleRecyclerView
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
+
 }
 

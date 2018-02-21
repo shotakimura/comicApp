@@ -61,6 +61,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 titleRecyclerViewHolder.getTitleDelete().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
+                        //連打防止
                         v.setEnabled(false);
                         new Handler().postDelayed(new Runnable() {
                             public void run() {

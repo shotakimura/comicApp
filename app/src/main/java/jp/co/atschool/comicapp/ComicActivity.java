@@ -22,6 +22,8 @@ public class ComicActivity extends AppCompatActivity {
                 returnMain();
             }
         });
+
+        Card card =
     }
 
     private void returnMain() {

@@ -1,10 +1,12 @@
 package jp.co.atschool.comicapp;
 
+import java.io.Serializable;
+
 /**
  * Created by shotakimura on 2018/02/13.
  */
 
-public class Card {
+public class Card implements Serializable{
     private String title;
     private String titleKana;
     private String seriesName;
@@ -55,6 +57,9 @@ public class Card {
     public String getLargeImageUrl() {
         return largeImageUrl;
     }
+    public String getItemPrice() { return itemPrice; }
+    public String getItemUrl() { return itemUrl; }
+
 
     public void setTitle(String title) {
         this.title = title;

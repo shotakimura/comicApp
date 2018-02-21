@@ -41,6 +41,12 @@ public class CardRecyclerViewHolder extends RecyclerView.ViewHolder {
         saveTitle = title.replace("（", " ");
         saveTitle = saveTitle.replace("）", "");
         titleCard.setText(saveTitle);
+
+//        viewCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
     }
 
     public CardView getViewCard() {

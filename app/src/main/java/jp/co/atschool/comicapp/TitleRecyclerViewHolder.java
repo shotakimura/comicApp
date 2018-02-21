@@ -47,7 +47,7 @@ public class TitleRecyclerViewHolder extends RecyclerView.ViewHolder {
         cardsRecyclerView.setLayoutManager(linearLayoutManager);
 
         // Adapter
-        cardRecyclerViewAdapter = new CardRecyclerViewAdapter();
+        cardRecyclerViewAdapter = new CardRecyclerViewAdapter(itemView.getContext());
         cardsRecyclerView.setAdapter(cardRecyclerViewAdapter);
     }
 
@@ -57,6 +57,9 @@ public class TitleRecyclerViewHolder extends RecyclerView.ViewHolder {
         cardRecyclerViewAdapter.notifyDataSetChanged();
 
         titleComic.setText(cards.getTitle());
+
+
+
     }
 
     public ImageButton getTitleDelete() {
